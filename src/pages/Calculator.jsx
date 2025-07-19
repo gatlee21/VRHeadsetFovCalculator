@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InputField from '../components/InputField.jsx';
+import { calculateFOV } from '../utils/fov.js';
 
 function Calculator() {
 
@@ -12,8 +13,14 @@ function Calculator() {
     ipd: 70,
   });
 
+  const [result, setResult] = useState(null);
+
   function handleChange(e) {
     setInputs({ ...inputs, [e.target.name]: Number(e.target.value) });
+  }
+
+  function handleFovCalculations(e) {
+    setResult(calculateFOV(inputs));
   }
 
   return (
@@ -60,6 +67,23 @@ function Calculator() {
         name="ipd"
         unit="mm"
       />
+
+      <button onClick={handleFovCalculations}>Calculate FOV</button>
+
+      {result && (
+        <div style={{ marginTop: 20 }}>
+          <div><strong>Magnification:</strong> {result.magnification.toFixed(2)}x</div>
+          <div><strong>Virtual Image Distance:</strong> {result.virtualImageDistance.toFixed(2)} mm</div>
+          <div><strong>Virtual Image Width:</strong> {result.virtualWidth.toFixed(2)} mm</div>
+          <div><strong>Virtual Image Height:</strong> {result.virtualHeight.toFixed(2)} mm</div>
+          <div><strong>Nasal FOV:</strong> {result.fov_nasal.toFixed(2)}°</div>
+          <div><strong>Monocular FOV:</strong> {result.fov_monocular.toFixed(2)}°</div>
+          <div><strong>Total Horizontal FOV:</strong> {result.fov_h_total.toFixed(2)}°</div>
+          <div><strong>Stereo Overlap FOV:</strong> {result.stereo_overlap_fov.toFixed(2)}°</div>
+          <div><strong>Vertical FOV:</strong> {result.fov_v.toFixed(2)}°</div>
+        </div>
+      )}
+
     </div>
   );
 }
