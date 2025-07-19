@@ -11,6 +11,7 @@ function Calculator() {
     displayHeight: 64,
     eyeRelief: 18,
     ipd: 70,
+    cantAngle: 0,
   });
 
   const [result, setResult] = useState(null);
@@ -66,6 +67,13 @@ function Calculator() {
         onChange={handleChange}
         name="ipd"
         unit="mm"
+      />
+    <InputField
+        label="Cant angle"
+        value={inputs.cantAngle}
+        onChange={handleChange}
+        name="cantAngle"
+        unit="degrees"
       />
 
       <button onClick={handleFovCalculations}>Calculate FOV</button>
