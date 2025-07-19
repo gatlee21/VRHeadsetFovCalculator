@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InputField from '../components/InputField.jsx';
+import ResultsTable from '../components/ResultsTable.jsx';
 import { calculateFOV } from '../utils/fov.js';
 
 function Calculator() {
@@ -15,6 +16,7 @@ function Calculator() {
   });
 
   const [result, setResult] = useState(null);
+  const [tableRows, setTableRows] = useState([]);
 
   function handleChange(e) {
     setInputs({ ...inputs, [e.target.name]: Number(e.target.value) });
@@ -22,6 +24,14 @@ function Calculator() {
 
   function handleFovCalculations(e) {
     setResult(calculateFOV(inputs));
+  }
+
+  function handleAddToTable(e) {
+    if (!result) return;
+    setTableRows([
+      ...tableRows,
+      { inputs: { ...inputs }, results: { ...result } }
+    ]);
   }
 
   return (
@@ -77,6 +87,9 @@ function Calculator() {
       />
 
       <button onClick={handleFovCalculations}>Calculate FOV</button>
+        <button onClick={handleAddToTable} disabled={!result} style={{ marginLeft: 8 }}>
+        Add to Table
+      </button>
 
       {result && (
         <div style={{ marginTop: 20 }}>
@@ -92,6 +105,7 @@ function Calculator() {
         </div>
       )}
 
+      <ResultsTable rows={tableRows} />
     </div>
   );
 }
