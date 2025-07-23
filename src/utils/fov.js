@@ -64,9 +64,16 @@ export function calculateFOV({
 
   const fov_nasal = Math.abs(calculateHorizontalFOV_Nasal(magnification, ipd, eyeRelief, virtualImageDistance, cantAngle));
   const fov_monocular = Math.abs(calculateHorizontalFOV_Monocular(magnification, displayWidth, ipd, eyeRelief, virtualImageDistance, cantAngle));
-  const fov_h_total = Math.abs(calculateHorizontalFOV_Total(fov_monocular));
-  const stereo_overlap_fov = Math.abs(calculateStereoOverlapFOV(fov_nasal));
+  var fov_h_total = Math.abs(calculateHorizontalFOV_Total(fov_monocular));
+  var stereo_overlap_fov = Math.abs(calculateStereoOverlapFOV(fov_nasal));
   const fov_v = Math.abs(calculateVerticalFOV(magnification, displayHeight, eyeRelief, virtualImageDistance));
+
+  // Handle case where nasal > temporal
+  if (fov_nasal > fov_monocular) {
+    var temp = fov_h_total;
+    fov_h_total = stereo_overlap_fov;
+    stereo_overlap_fov = temp;
+  }
 
   return {
     magnification,
