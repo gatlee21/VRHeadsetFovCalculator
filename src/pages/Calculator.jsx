@@ -112,6 +112,7 @@ function Calculator() {
     </div>
       <div style={{ marginLeft: 40 }}>
         <FOVVisualizer
+          fov_h_total={result?.fov_h_total || 0}
           fov_peripheral={result?.fov_peripheral || 0}
           stereo_overlap_fov={result?.stereo_overlap_fov || 0}
         />

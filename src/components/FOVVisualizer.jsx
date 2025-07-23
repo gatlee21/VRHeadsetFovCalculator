@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { Stage, Layer, Arc } from 'react-konva';
 
 // FOV props should be in degrees: fov_peripheral, stereo_overlap_fov}
-function FOVVisualizer({fov_peripheral, stereo_overlap_fov }) {
-
-  var totalFOV = fov_peripheral * 2;
+function FOVVisualizer({fov_h_total, stereo_overlap_fov }) {
+  const totalFOV = fov_h_total
   const stereoFOV = stereo_overlap_fov;
   const leftPeripheralStart = -totalFOV / 2;
   const leftPeripheralEnd = -stereoFOV / 2;
