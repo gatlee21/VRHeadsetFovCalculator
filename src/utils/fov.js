@@ -25,15 +25,15 @@ export function calculateHorizontalFOV_Nasal(M, ipd, d_eye, d_v, cant) {
   return Math.atan(numerator / (d_eye + d_v)) * (180 / Math.PI) + cant;
 }
 
-// Monocular FOV (full cone): 2 * arctan(...)
-export function calculateHorizontalFOV_Monocular(M, w, ipd, d_eye, d_v, cant) {
+// Peripheral FOV (full cone): 2 * arctan(...)
+export function calculateHorizontalFOV_Peripheral(M, w, ipd, d_eye, d_v, cant) {
   const numerator = M * (w - (ipd / 2));
   return Math.atan(numerator / (d_eye + d_v)) * (180 / Math.PI) - cant;
 }
 
-// Total horizontal FOV = monocular * 2
-export function calculateHorizontalFOV_Total(fov_monocular) {
-  return fov_monocular * 2;
+// Total horizontal FOV = peripheral * 2
+export function calculateHorizontalFOV_Total(fov_peripheral) {
+  return fov_peripheral * 2;
 }
 
 // Stereo overlap FOV = nasal * 2
@@ -63,13 +63,13 @@ export function calculateFOV({
   var virtualHeight = calculateVirtualHeight(magnification, displayHeight);
 
   var fov_nasal = Math.abs(calculateHorizontalFOV_Nasal(magnification, ipd, eyeRelief, virtualImageDistance, cantAngle));
-  var fov_monocular = Math.abs(calculateHorizontalFOV_Monocular(magnification, displayWidth, ipd, eyeRelief, virtualImageDistance, cantAngle));
-  var fov_h_total = Math.abs(calculateHorizontalFOV_Total(fov_monocular));
+  var fov_peripheral = Math.abs(calculateHorizontalFOV_Peripheral(magnification, displayWidth, ipd, eyeRelief, virtualImageDistance, cantAngle));
+  var fov_h_total = Math.abs(calculateHorizontalFOV_Total(fov_peripheral));
   var stereo_overlap_fov = Math.abs(calculateStereoOverlapFOV(fov_nasal));
   var fov_v = Math.abs(calculateVerticalFOV(magnification, displayHeight, eyeRelief, virtualImageDistance));
 
   // Handle case where nasal > temporal
-  if (fov_nasal > fov_monocular) {
+  if (fov_nasal > fov_peripheral) {
     var temp = fov_h_total;
     fov_h_total = stereo_overlap_fov;
     stereo_overlap_fov = temp;
@@ -81,7 +81,7 @@ export function calculateFOV({
     virtualWidth,
     virtualHeight,
     fov_nasal,
-    fov_monocular,
+    fov_peripheral,
     fov_h_total,
     stereo_overlap_fov,
     fov_v
