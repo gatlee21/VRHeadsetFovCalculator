@@ -57,16 +57,16 @@ export function calculateFOV({
   ipd,               // interpupillary distance
   cantAngle,
 }) {
-  const magnification = calculateMagnification(focalLength, lensToDisplay);
-  const virtualImageDistance = calculateVirtualImageDistance(focalLength, lensToDisplay);
-  const virtualWidth = calculateVirtualWidth(magnification, displayWidth);
-  const virtualHeight = calculateVirtualHeight(magnification, displayHeight);
+  var magnification = calculateMagnification(focalLength, lensToDisplay);
+  var virtualImageDistance = calculateVirtualImageDistance(focalLength, lensToDisplay);
+  var virtualWidth = calculateVirtualWidth(magnification, displayWidth);
+  var virtualHeight = calculateVirtualHeight(magnification, displayHeight);
 
-  const fov_nasal = Math.abs(calculateHorizontalFOV_Nasal(magnification, ipd, eyeRelief, virtualImageDistance, cantAngle));
-  const fov_monocular = Math.abs(calculateHorizontalFOV_Monocular(magnification, displayWidth, ipd, eyeRelief, virtualImageDistance, cantAngle));
+  var fov_nasal = Math.abs(calculateHorizontalFOV_Nasal(magnification, ipd, eyeRelief, virtualImageDistance, cantAngle));
+  var fov_monocular = Math.abs(calculateHorizontalFOV_Monocular(magnification, displayWidth, ipd, eyeRelief, virtualImageDistance, cantAngle));
   var fov_h_total = Math.abs(calculateHorizontalFOV_Total(fov_monocular));
   var stereo_overlap_fov = Math.abs(calculateStereoOverlapFOV(fov_nasal));
-  const fov_v = Math.abs(calculateVerticalFOV(magnification, displayHeight, eyeRelief, virtualImageDistance));
+  var fov_v = Math.abs(calculateVerticalFOV(magnification, displayHeight, eyeRelief, virtualImageDistance));
 
   // Handle case where nasal > temporal
   if (fov_nasal > fov_monocular) {
