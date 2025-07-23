@@ -110,13 +110,12 @@ function Calculator() {
       <ResultsTable rows={tableRows} />
 
     </div>
-      {/* <div style={{ marginLeft: 40 }}>
+      <div style={{ marginLeft: 40 }}>
         <FOVVisualizer
-          fov_nasal={result?.fov_nasal || 0}
-          fov_monocular={result?.fov_monocular || 0}
+          fov_peripheral={result?.fov_peripheral || 0}
           stereo_overlap_fov={result?.stereo_overlap_fov || 0}
         />
-      </div> */}
+      </div>
     </div>
 
   );
