@@ -68,11 +68,20 @@ export function calculateFOV({
   var stereo_overlap_fov = Math.abs(calculateStereoOverlapFOV(fov_nasal));
   var fov_v = Math.abs(calculateVerticalFOV(magnification, displayHeight, eyeRelief, virtualImageDistance));
 
+  let nasalEdgeCase = false;
   // Handle case where nasal > temporal
   if (fov_nasal > fov_peripheral) {
-    var temp = fov_h_total;
+    // Swap stereo and total horizontal
+    var temp_fov_h_total = fov_h_total;
     fov_h_total = stereo_overlap_fov;
-    stereo_overlap_fov = temp;
+    stereo_overlap_fov = temp_fov_h_total;
+
+    // Swap nasal and temporal
+    var temp_fov_nasal = fov_nasal;
+    fov_nasal = fov_peripheral;
+    fov_peripheral = temp_fov_nasal;
+
+    nasalEdgeCase = true;
   }
 
   return {
@@ -84,7 +93,8 @@ export function calculateFOV({
     fov_peripheral,
     fov_h_total,
     stereo_overlap_fov,
-    fov_v
+    fov_v,
+    nasalEdgeCase,
   };
 }
 

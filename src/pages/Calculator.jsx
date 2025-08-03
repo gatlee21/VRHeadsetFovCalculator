@@ -105,6 +105,11 @@ function Calculator() {
           <div><strong>Total Horizontal FOV:</strong> {result.fov_h_total.toFixed(2)}°</div>
           <div><strong>Stereo Overlap FOV:</strong> {result.stereo_overlap_fov.toFixed(2)}°</div>
           <div><strong>Vertical FOV:</strong> {result.fov_v.toFixed(2)}°</div>
+          {result?.nasalEdgeCase && (
+            <div style={{ color: 'red', fontWeight: 'bold', marginBottom: 10 }}>
+              Edge case: Peripheral FOV &lt; Nasal FOV, swapped values.
+            </div>
+          )}
         </div>
       )}
       <ResultsTable rows={tableRows} />
