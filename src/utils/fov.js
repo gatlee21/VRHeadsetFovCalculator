@@ -56,7 +56,16 @@ export function calculateFOV({
   eyeRelief,         // eye-relief
   ipd,               // interpupillary distance
   cantAngle,
+  displayOrientation,
 }) {
+
+  // Check display orientation
+  if (displayOrientation == "landscape") {
+    var temp_displayHeight = displayHeight;
+    displayHeight = displayWidth;
+    displayWidth = temp_displayHeight;
+  }
+
   var magnification = calculateMagnification(focalLength, lensToDisplay);
   var virtualImageDistance = calculateVirtualImageDistance(focalLength, lensToDisplay);
   var virtualWidth = calculateVirtualWidth(magnification, displayWidth);

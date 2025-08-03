@@ -9,18 +9,33 @@ function Calculator() {
   const [inputs, setInputs] = useState({
     focalLength: 66,
     lensToDisplay: 65,
-    displayWidth: 121,
-    displayHeight: 64,
+    displayWidth: 64,
+    displayHeight: 121,
     eyeRelief: 18,
     ipd: 70,
     cantAngle: 0,
+    displayOrientation: 'landscape',
   });
 
   const [result, setResult] = useState(null);
   const [tableRows, setTableRows] = useState([]);
 
   function handleChange(e) {
-    setInputs({ ...inputs, [e.target.name]: Number(e.target.value) });
+    const { name, value } = e.target;
+  
+    const numericFields = [
+      'focalLength',
+      'lensToDisplay',
+      'displayWidth',
+      'displayHeight',
+      'eyeRelief',
+      'ipd',
+      'cantAngle',
+    ];
+    setInputs({
+      ...inputs,
+      [name]: numericFields.includes(name) ? Number(value) : value,
+    });
   }
 
   function handleFovCalculations(e) {
@@ -88,6 +103,18 @@ function Calculator() {
             name="cantAngle"
             unit="degrees"
           />
+
+        <label style={{ display: 'block', marginBottom: 8 }}>
+          Display Orientation:&nbsp;
+          <select
+            name="displayOrientation"
+            value={inputs.displayOrientation}
+            onChange={handleChange}
+          >
+            <option value="landscape">Landscape</option>
+            <option value="portrait">Portrait</option>
+          </select>
+        </label>
 
       <button onClick={handleFovCalculations}>Calculate FOV</button>
         <button onClick={handleAddToTable} disabled={!result} style={{ marginLeft: 8 }}>
