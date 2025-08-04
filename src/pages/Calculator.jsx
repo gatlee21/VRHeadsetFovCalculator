@@ -15,7 +15,7 @@ function Calculator() {
     pixelWidth: 1440,
     pixelHeight: 2560,
     eyeRelief: 18,
-    ipd: 70,
+    ipd: 64,
     cantAngle: 0,
     displayOrientation: 'landscape',
   });
