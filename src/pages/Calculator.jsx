@@ -143,7 +143,7 @@ function Calculator() {
       {result && (
         <div style={{ marginTop: 20 }}>
           <div><strong>Magnification:</strong> {result.magnification.toFixed(2)}x</div>
-          <div><strong>Virtual Image Distance:</strong> {result.virtualImageDistance.toFixed(2)} mm</div>
+          <strong>Virtual Image Distance:</strong> {result.virtualImageDistance.toFixed(2)} mm ({(result.virtualImageDistance / 25.4 / 12).toFixed(2)} ft)
           <div><strong>Virtual Image Width:</strong> {result.virtualWidth.toFixed(2)} mm</div>
           <div><strong>Virtual Image Height:</strong> {result.virtualHeight.toFixed(2)} mm</div>
           <div><strong>Nasal FOV:</strong> {result.fov_nasal.toFixed(2)}°</div>
