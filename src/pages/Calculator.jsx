@@ -3,6 +3,7 @@ import InputField from '../components/InputField.jsx';
 import ResultsTable from '../components/ResultsTable.jsx';
 import FOVVisualizer from '../components/FOVVisualizer.jsx';
 import { calculateFOV } from '../utils/fov.js';
+import { calculatePPD } from '../utils/ppd.js';
 
 function Calculator() {
 
@@ -11,6 +12,8 @@ function Calculator() {
     lensToDisplay: 65,
     displayWidth: 64,
     displayHeight: 121,
+    pixelWidth: 1440,
+    pixelHeight: 2560,
     eyeRelief: 18,
     ipd: 70,
     cantAngle: 0,
@@ -38,8 +41,10 @@ function Calculator() {
     });
   }
 
-  function handleFovCalculations(e) {
-    setResult(calculateFOV(inputs));
+  function handleCalculations(e) {
+    const fovResults = calculateFOV(inputs);
+    const ppd = calculatePPD(inputs);
+    setResult({ ...fovResults, ppd }); // Combine results!
   }
 
   function handleAddToTable(e) {
@@ -83,6 +88,20 @@ function Calculator() {
           unit="mm"
         />
         <InputField
+          label="Pixel width"
+          value={inputs.pixelWidth}
+          onChange={handleChange}
+          name="pixelWidth"
+          unit="px"
+        />
+        <InputField
+          label="Pixel height"
+          value={inputs.pixelHeight}
+          onChange={handleChange}
+          name="pixelHeight"
+          unit="px"
+        />
+        <InputField
           label="Eye-relief"
           value={inputs.eyeRelief}
           onChange={handleChange}
@@ -116,7 +135,7 @@ function Calculator() {
           </select>
         </label>
 
-      <button onClick={handleFovCalculations}>Calculate FOV</button>
+      <button onClick={handleCalculations}>Calculate FOV</button>
         <button onClick={handleAddToTable} disabled={!result} style={{ marginLeft: 8 }}>
         Add to Table
       </button>
@@ -132,6 +151,7 @@ function Calculator() {
           <div><strong>Total Horizontal FOV:</strong> {result.fov_h_total.toFixed(2)}°</div>
           <div><strong>Stereo Overlap FOV:</strong> {result.stereo_overlap_fov.toFixed(2)}°</div>
           <div><strong>Vertical FOV:</strong> {result.fov_v.toFixed(2)}°</div>
+          <div><strong>PPD:</strong> {result.ppd.toFixed(0)}</div>
           {result?.nasalEdgeCase && (
             <div style={{ color: 'red', fontWeight: 'bold', marginBottom: 10 }}>
               Edge case: Peripheral FOV &lt; Nasal FOV, swapped values.
